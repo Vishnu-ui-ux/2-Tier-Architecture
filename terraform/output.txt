@@ -1,0 +1,5 @@
+{
+    "UserId": "AIDAZW4466FXHVYMYIZZK",
+    "Account": "667659727214",
+    "Arn": "arn:aws:iam::667659727214:user/2tier-terrafom"
+}

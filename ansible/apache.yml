@@ -1,0 +1,36 @@
+---
+- name: Install Apache on Ubuntu
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+
+    - name: Start Apache
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Create index page
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <html>
+          <head>
+            <title>2 Tier Architecture</title>
+          </head>
+          <body style="font-family:Arial;text-align:center;margin-top:100px;">
+            <h1> 2 Tier Architecture</h1>
+            <h2>Terraform + Ansible Successfully Deployed</h2>
+            <h3>Created by Vishnu</h3>
+          </body>
+          </html>

@@ -1,0 +1,33 @@
+---
+- name: Deploy Docker Container
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Copy Docker project
+      copy:
+        src: /home/ubuntu/docker-web/
+        dest: /home/ubuntu/docker-web/
+
+    - name: Build Docker Image
+      community.docker.docker_image:
+        name: twotier-web
+        tag: latest
+        source: build
+        build:
+          path: /home/ubuntu/docker-web
+
+    - name: Remove old container
+      community.docker.docker_container:
+        name: twotier-container
+        state: absent
+
+    - name: Run Docker Container
+      community.docker.docker_container:
+        name: twotier-container
+        image: twotier-web:latest
+        state: started
+        restart_policy: always
+        published_ports:
+          - "80:80"
